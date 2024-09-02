@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is the admin page</h1>
+    <a href="createpost">Create New Post</a>
+    <a href="createAuthor">Create Author</a>
+    <a href="logout">Log out</a>
+    <%if(locals.allAuth){%>
+        <h2>List of all Authors</h2>        
+        <ul>
+            <%allAuth.forEach(value=>{%>
+                <% if(value.role!="admin"){%>
+                <li><%=value.username%><a href="deleteAuthor/<%=value._id%>">Delete</a></li>
+                <%}%>            
+           <%})%>
+        </ul>
+        <%}%>
+        <a href="allpost">See all Posts</a>
+        <script>
+            const deletebutton=document.querySelectorAll('.deletebutton');
+            deletebutton.forEach(delbutton=>{
+                delbutton.addEventListener('click',(event)=>{                
+           url=`localhost:8001/deleteAuthor/${event.target.id}`;
+           fetch(url)
+           .then(console.log("successfully fetched"))
+           .catch(console.log("Error in fetching"));
+            })})
+;        </script>
+   
+</body>
+</html>
